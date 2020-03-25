@@ -3,6 +3,8 @@
 
 from ModuleRegule import Regule
 from Connect import connect
+from Alarm import Mail
+
 import json
 
 
@@ -38,7 +40,11 @@ if __name__ == "__main__":
     Pwr_status = json.dumps(device_status.get_Pwr(),
                             sort_keys=True, indent=4, separators=(',', ':'))
     Switch_status = json.dumps(device_status.get_Switch(),
-                            sort_keys=True, indent=4, separators=(',', ':'))
+                               sort_keys=True, indent=4, separators=(',', ':'))
     temperature = json.dumps(device_status.Temperature(),
-                            sort_keys=True, indent=4, separators=(',', ':'))
-    print(Fan_status, Pwr_status, Switch_status, temperature)
+                             sort_keys=True, indent=4, separators=(',', ':'))
+    # print(Fan_status, Pwr_status, Switch_status, temperature)
+    SwitchInfoCenter = Fan_status + Pwr_status + Switch_status + temperature
+    print(SwitchInfoCenter)
+    info_mail = Mail.mail()
+    info_mail.sendmail('631643983@qq.com',SwitchInfoCenter)
